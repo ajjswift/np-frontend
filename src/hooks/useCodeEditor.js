@@ -19,7 +19,7 @@ export function useCodeEditor() {
   const environmentId = params.environmentId;
   // WebSocket connection setup
   useEffect(() => {
-    socketRef.current = new WebSocket("wss://socket.pnea.ajjs.co.uk/ws");
+    socketRef.current = new WebSocket(process.env.NEXT_PUBLIC_WS_URL);
 
     socketRef.current.addEventListener("open", () => {
       setSocketStatus("connected");
