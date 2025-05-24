@@ -24,6 +24,7 @@
         "@radix-ui/react-separator": "^1.1.4",
         "@radix-ui/react-slot": "^1.2.2",
         "@radix-ui/react-tabs": "^1.1.9",
+        "@types/node": "^22.15.21",
         "@uiw/codemirror-theme-vscode": "^4.23.10",
         "@uiw/codemirror-themes": "^4.23.10",
         "@uiw/react-codemirror": "^4.23.10",
@@ -403,6 +404,8 @@
     "@types/json-schema": ["@types/json-schema@7.0.15", "", {}, "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="],
 
     "@types/json5": ["@types/json5@0.0.29", "", {}, "sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ=="],
+
+    "@types/node": ["@types/node@22.15.21", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-EV/37Td6c+MgKAbkcLG6vqZ2zEYHD7bvSrzqqs2RIhbA6w3x+Dqz8MZM3sP6kGTeLrdoOgKZe+Xja7tUB2DNkQ=="],
 
     "@types/react": ["@types/react@19.1.2", "", { "dependencies": { "csstype": "^3.0.2" } }, "sha512-oxLPMytKchWGbnQM9O7D67uPa9paTNxO7jVoNMXgkkErULBPhPARCfkKL9ytcIJJRGjbsVwW4ugJzyFFvm/Tiw=="],
 
@@ -1201,6 +1204,8 @@
     "typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 
     "unbox-primitive": ["unbox-primitive@1.1.0", "", { "dependencies": { "call-bound": "^1.0.3", "has-bigints": "^1.0.2", "has-symbols": "^1.1.0", "which-boxed-primitive": "^1.1.1" } }, "sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw=="],
+
+    "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
     "unrs-resolver": ["unrs-resolver@1.7.1", "", { "dependencies": { "napi-postinstall": "^0.2.1" }, "optionalDependencies": { "@unrs/resolver-binding-darwin-arm64": "1.7.1", "@unrs/resolver-binding-darwin-x64": "1.7.1", "@unrs/resolver-binding-freebsd-x64": "1.7.1", "@unrs/resolver-binding-linux-arm-gnueabihf": "1.7.1", "@unrs/resolver-binding-linux-arm-musleabihf": "1.7.1", "@unrs/resolver-binding-linux-arm64-gnu": "1.7.1", "@unrs/resolver-binding-linux-arm64-musl": "1.7.1", "@unrs/resolver-binding-linux-ppc64-gnu": "1.7.1", "@unrs/resolver-binding-linux-riscv64-gnu": "1.7.1", "@unrs/resolver-binding-linux-riscv64-musl": "1.7.1", "@unrs/resolver-binding-linux-s390x-gnu": "1.7.1", "@unrs/resolver-binding-linux-x64-gnu": "1.7.1", "@unrs/resolver-binding-linux-x64-musl": "1.7.1", "@unrs/resolver-binding-wasm32-wasi": "1.7.1", "@unrs/resolver-binding-win32-arm64-msvc": "1.7.1", "@unrs/resolver-binding-win32-ia32-msvc": "1.7.1", "@unrs/resolver-binding-win32-x64-msvc": "1.7.1" } }, "sha512-jsXGehlxwxyetBCbABwgKB41xF1zhcnHYs9X16Cyx1aaWXFvqaXRJOpRgc/kB9zTBaSivwhFEHThoiu74PSU6w=="],
 
