@@ -3,23 +3,33 @@ import { verifySession } from "@/lib/verifySession";
 import { Database } from "@/lib/DatabaseClasses";
 
 export const GET = async (request) => {
-    const sessionToken = await request.cookies.get("session_token")?.value;
+    try {
+        const sessionToken = await request.cookies.get("session_token")?.value;
 
-    const validSession = await verifySession(sessionToken);
-
-    if (!validSession) {
+        const validSession = await verifySession(sessionToken);
+    
+        if (!validSession) {
+            console.log(sessionToken)
+            return NextResponse.json(
+                { message: "Invalid session" },
+                { status: 401 } // Unauthorized status
+            );
+        }
+    
+        const db = new Database();
+        const environments =
+            await db.execute`SELECT * FROM environments WHERE owner = ${validSession.userId}`;
+    
         return NextResponse.json(
-            { message: "Invalid session" },
-            { status: 401 } // Unauthorized status
+            { message: "Success", environments: environments.rows },
+            { status: 200 }
         );
     }
-
-    const db = new Database();
-    const environments =
-        await db.execute`SELECT * FROM environments WHERE owner = ${validSession.userId}`;
-
-    return NextResponse.json(
-        { message: "Success", environments: environments.rows },
-        { status: 200 }
-    );
+    catch (e) {
+        console.error(e)
+        return NextResponse.json(
+            { message: "An error occured" },
+            { status: 500 }
+        );
+    }
 };
