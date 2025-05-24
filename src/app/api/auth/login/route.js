@@ -75,7 +75,7 @@ export async function POST(req) {
             value: token,
             httpOnly: true,
             secure: process.env.NODE_ENV === "production", // Only use HTTPS in production
-            sameSite: "lax",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
             path: "/",
             expires: expiresAt,
         });
