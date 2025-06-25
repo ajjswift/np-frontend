@@ -1,3 +1,5 @@
+"use strict"; // Added to prevent use on the client accidentally
+
 /* Imports */
 
 import { z } from "zod";

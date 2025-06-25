@@ -9,6 +9,8 @@ import { FileExplorer } from "./FileExplorer";
 import { EditorPanel } from "./EditorPanel";
 import { ConsolePanel } from "./ConsolePanel";
 import { useCodeEditor } from "@/hooks/useCodeEditor";
+import ReactMarkdown from "react-markdown";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 import {
     Dialog,
@@ -20,7 +22,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Select,
     SelectContent,
@@ -56,7 +58,8 @@ export function CodeEditor() {
         handleEditorLineChange,
         broadcastInputChange,
         input,
-        setInput
+        setInput,
+        isTeacher,
     } = useCodeEditor();
 
     return (
@@ -71,6 +74,7 @@ export function CodeEditor() {
                 isOpen={addFileDialogOpen}
                 setIsOpen={setAddFileDialogOpen}
                 submitAddFile={confirmAddFile}
+                isTeacher={isTeacher}
             />
             <ResizablePanelGroup direction="horizontal" className="flex-1">
                 {/* File Explorer Panel */}
@@ -83,6 +87,7 @@ export function CodeEditor() {
                         renameFile={renameFile}
                         deleteFile={deleteFile}
                         duplicateFile={duplicateFile}
+                        isTeacher={isTeacher}
                     />
                 </ResizablePanel>
 
@@ -92,23 +97,44 @@ export function CodeEditor() {
                 <ResizablePanel defaultSize={80}>
                     <ResizablePanelGroup direction="vertical">
                         {/* Editor Panel */}
+
                         <ResizablePanel defaultSize={70}>
-                            <EditorPanel
-                                currentFile={currentFile}
-                                files={files}
-                                handleEditorChange={handleEditorChange}
-                                setEditorMounted={setEditorMounted}
-                                broadcastCursor={broadcastCursor}
-                                otherCursors={otherCursors}
-                                handleEditorLineChange={handleEditorLineChange}
-                            />
+                            {currentFile === "instructions.md" && !isTeacher ? (
+                                <div className="h-full bg-background overflow-auto prose prose-invert max-w-none p-6">
+                                    <MarkdownRenderer
+                                        content={
+                                            files["instructions.md"] ||
+                                            "*No instructions yet.*"
+                                        }
+                                    />
+                                </div>
+                            ) : (
+                                <EditorPanel
+                                    currentFile={currentFile}
+                                    files={files}
+                                    handleEditorChange={handleEditorChange}
+                                    setEditorMounted={setEditorMounted}
+                                    broadcastCursor={broadcastCursor}
+                                    otherCursors={otherCursors}
+                                    handleEditorLineChange={
+                                        handleEditorLineChange
+                                    }
+                                />
+                            )}
                         </ResizablePanel>
 
                         <ResizableHandle withHandle />
 
                         {/* Console Panel */}
                         <ResizablePanel defaultSize={30}>
-                            <ConsolePanel output={output} socketStatus={socketStatus} sendInput={sendInput} input={input} setInput={setInput} broadcastInputChange={broadcastInputChange} />
+                            <ConsolePanel
+                                output={output}
+                                socketStatus={socketStatus}
+                                sendInput={sendInput}
+                                input={input}
+                                setInput={setInput}
+                                broadcastInputChange={broadcastInputChange}
+                            />
                         </ResizablePanel>
                     </ResizablePanelGroup>
                 </ResizablePanel>
@@ -116,7 +142,7 @@ export function CodeEditor() {
         </div>
     );
 }
-function NewFileDialog({ isOpen, setIsOpen, submitAddFile }) {
+function NewFileDialog({ isOpen, setIsOpen, submitAddFile, isTeacher }) {
     const [inputtedName, setInputtedName] = useState("");
     const [fileExtension, setFileExtension] = useState(".py");
 
@@ -142,11 +168,16 @@ function NewFileDialog({ isOpen, setIsOpen, submitAddFile }) {
     };
 
     const handleSubmit = () => {
-        if (!inputtedName.trim()) {
+        if (!inputtedName.trim() && fileExtension !== ".md") {
             console.error("File name cannot be empty");
             return;
         }
-        const fullFileName = `${inputtedName.trim()}${fileExtension}`;
+        let fullFileName;
+        if (fileExtension === ".md") {
+            fullFileName = "instructions.md";
+        } else {
+            fullFileName = `${inputtedName.trim()}${fileExtension}`;
+        }
         submitAddFile(fullFileName);
         setInputtedName("");
         setFileExtension(".py");
@@ -175,9 +206,14 @@ function NewFileDialog({ isOpen, setIsOpen, submitAddFile }) {
                     <div className="flex w-full items-center space-x-2">
                         <Input
                             id="fileName"
-                            value={inputtedName}
+                            value={
+                                fileExtension !== ".md"
+                                    ? inputtedName
+                                    : "instructions"
+                            }
                             onChange={modifyName}
                             onKeyDown={handleKeyDown}
+                            disabled={fileExtension === ".md"}
                             placeholder="File name"
                             className="flex-grow" // Allow input to take available space
                         />
@@ -195,6 +231,9 @@ function NewFileDialog({ isOpen, setIsOpen, submitAddFile }) {
                                     <SelectItem value=".csv">.csv</SelectItem>
                                     <SelectItem value=".json">.json</SelectItem>
                                     <SelectItem value=".yml">.yml</SelectItem>
+                                    {isTeacher && (
+                                        <SelectItem value=".md">.md</SelectItem>
+                                    )}
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
@@ -206,7 +245,9 @@ function NewFileDialog({ isOpen, setIsOpen, submitAddFile }) {
                     </Button>
                     <Button
                         onClick={handleSubmit}
-                        disabled={!inputtedName.trim()}
+                        disabled={
+                            !inputtedName.trim() && fileExtension !== ".md"
+                        }
                     >
                         Create File
                     </Button>

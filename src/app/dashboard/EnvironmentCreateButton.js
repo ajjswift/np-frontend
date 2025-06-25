@@ -33,27 +33,34 @@ export function EnvironmentCreateButton() {
         }
     }
 
-    return (<>
-        <Dialog open={isEnvironmentNameDialogOpen} onOpenChange={(open) => {
-            setIsEnvironmentNameDialogOpen(open)
-        }}>
-  <DialogTrigger asChild><span className="p-2 bg-zinc-600 text-white cursor-pointer">Create New</span></DialogTrigger>
-  <DialogContent>
-    <DialogHeader className={"pb-4"}>
-      <DialogTitle>Create a new Environment</DialogTitle>
-    </DialogHeader>
-    <Label htmlFor="environment-name">Environment Name</Label>
-    <Input
-        id="environment-name"
-        value={inputtedName}
-        onChange={(e)=> setInputtedName(e.target.value)} 
-    />
-    <DialogFooter>
-        <Button onClick={handleEnvironmentCreate}>Create</Button>
-    </DialogFooter>
-  </DialogContent>
-
-</Dialog>
+    return (
+        <>
+            <Dialog
+                open={isEnvironmentNameDialogOpen}
+                onOpenChange={(open) => {
+                    setIsEnvironmentNameDialogOpen(open);
+                }}
+            >
+                <DialogTrigger asChild>
+                    <Button>Create new</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader className={"pb-4"}>
+                        <DialogTitle>Create a new Environment</DialogTitle>
+                    </DialogHeader>
+                    <Label htmlFor="environment-name">Environment Name</Label>
+                    <Input
+                        id="environment-name"
+                        value={inputtedName}
+                        onChange={(e) => setInputtedName(e.target.value)}
+                    />
+                    <DialogFooter>
+                        <Button onClick={handleEnvironmentCreate}>
+                            Create
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </>
-    )
+    );
 }

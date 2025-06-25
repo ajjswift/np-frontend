@@ -124,163 +124,187 @@ export function FileExplorer({
     setShowRenameDialog(true);
   };
 
+  const sortedFiles = [
+      ...Object.keys(files).filter((f) => f === "instructions.md"),
+      ...Object.keys(files).filter((f) => f !== "instructions.md"),
+  ];
+
   return (
-    <div className="h-full flex flex-col">
-      <div className="p-3 border-b flex items-center justify-between">
-        <h3 className="font-semibold">Files</h3>
-        <div className="flex gap-1">
-          <Button
-            onClick={addFile}
-            size="icon"
-            variant="ghost"
-            title="New File"
-          >
-            <FontAwesomeIcon icon={faFileMedical} className="h-4 w-4" />
-          </Button>
-          
-        </div>
-      </div>
-      <ScrollArea className="flex-1 p-2">
-        <Tree
-          className="overflow-hidden rounded-md bg-background p-2"
-          elements={treeElements}
-          initialExpandedItems={["root"]}
-        >
-          <Folder element="Project" value="root">
-            {Object.keys(files).map((filename, index) => (
-              <ContextMenu key={`file-${index}`}>
-                <ContextMenuTrigger>
-                  <File
-                    value={`file-${index}`}
-                    element={filename}
-                    onClick={() => setCurrentFile(filename)}
-                    fileIcon={getFileIcon(filename)}
-                    filename={filename}
+      <div className="h-full flex flex-col">
+          <div className="p-3 border-b flex items-center justify-between">
+              <h3 className="font-semibold">Files</h3>
+              <div className="flex gap-1">
+                  <Button
+                      onClick={addFile}
+                      size="icon"
+                      variant="ghost"
+                      title="New File"
                   >
-                    <p>{filename}</p>
-                  </File>
-                </ContextMenuTrigger>
-                <ContextMenuContent className="w-48">
-                  <ContextMenuItem
-                    onClick={() => setCurrentFile(filename)}
-                    className="cursor-pointer"
-                  >
-                    Open
-                  </ContextMenuItem>
-                  <ContextMenuSeparator />
-                  <ContextMenuItem
-                    onClick={() => openRenameDialog(filename)}
-                    className="cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faPen} className="h-4 w-4 mr-2" />
-                    Rename
-                  </ContextMenuItem>
-                  <ContextMenuItem
-                    onClick={() => handleDuplicate(filename)}
-                    className="cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faCopy} className="h-4 w-4 mr-2" />
-                    Duplicate
-                  </ContextMenuItem>
-                  <ContextMenuSeparator />
-                  <ContextMenuItem
-                    onClick={() => openDeleteDialog(filename)}
-                    className="text-red-500 cursor-pointer"
-                  >
-                    <FontAwesomeIcon icon={faTrashAlt} className="h-4 w-4 mr-2" />
-                    Delete
-                  </ContextMenuItem>
-                </ContextMenuContent>
-              </ContextMenu>
-            ))}
-          </Folder>
-        </Tree>
-      </ScrollArea>
-
-      {/* Rename Dialog */}
-      <Dialog 
-        open={showRenameDialog} 
-        onOpenChange={(open) => {
-          setShowRenameDialog(open);
-          if (!open && currentFileRef.current) {
-            // Restore focus when dialog closes
-            setCurrentFile(currentFileRef.current);
-          }
-        }}
-      >
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Rename File</DialogTitle>
-            <DialogDescription>
-              Enter a new name for {selectedFile}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Name
-              </Label>
-              <Input
-                id="name"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-                className="col-span-3"
-                autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleRename();
-                }}
-              />
-            </div>
+                      <FontAwesomeIcon
+                          icon={faFileMedical}
+                          className="h-4 w-4"
+                      />
+                  </Button>
+              </div>
           </div>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => setShowRenameDialog(false)}
-            >
-              Cancel
-            </Button>
-            <Button type="button" onClick={handleRename}>
-              Rename
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          <ScrollArea className="flex-1 p-2">
+              <Tree
+                  className="overflow-hidden rounded-md bg-background p-2"
+                  elements={treeElements}
+                  initialExpandedItems={["root"]}
+              >
+                  <Folder element="Project" value="root">
+                      {sortedFiles.map((filename, index) => (
+                          <ContextMenu key={`file-${index}`}>
+                              <ContextMenuTrigger>
+                                  <File
+                                      value={`file-${index}`}
+                                      element={filename}
+                                      onClick={() => setCurrentFile(filename)}
+                                      fileIcon={getFileIcon(filename)}
+                                      filename={filename}
+                                  >
+                                      <p
+                                          className={
+                                              filename === "instructions.md"
+                                                  ? "font-bold uppercase"
+                                                  : ""
+                                          }
+                                      >
+                                          {filename === "instructions.md"
+                                              ? "INSTRUCTIONS"
+                                              : filename}
+                                      </p>
+                                  </File>
+                              </ContextMenuTrigger>
+                              <ContextMenuContent className="w-48">
+                                  <ContextMenuItem
+                                      onClick={() => setCurrentFile(filename)}
+                                      className="cursor-pointer"
+                                  >
+                                      Open
+                                  </ContextMenuItem>
+                                  <ContextMenuSeparator />
+                                  <ContextMenuItem
+                                      onClick={() => openRenameDialog(filename)}
+                                      className="cursor-pointer"
+                                  >
+                                      <FontAwesomeIcon
+                                          icon={faPen}
+                                          className="h-4 w-4 mr-2"
+                                      />
+                                      Rename
+                                  </ContextMenuItem>
+                                  <ContextMenuItem
+                                      onClick={() => handleDuplicate(filename)}
+                                      className="cursor-pointer"
+                                  >
+                                      <FontAwesomeIcon
+                                          icon={faCopy}
+                                          className="h-4 w-4 mr-2"
+                                      />
+                                      Duplicate
+                                  </ContextMenuItem>
+                                  <ContextMenuSeparator />
+                                  <ContextMenuItem
+                                      onClick={() => openDeleteDialog(filename)}
+                                      className="text-red-500 cursor-pointer"
+                                  >
+                                      <FontAwesomeIcon
+                                          icon={faTrashAlt}
+                                          className="h-4 w-4 mr-2"
+                                      />
+                                      Delete
+                                  </ContextMenuItem>
+                              </ContextMenuContent>
+                          </ContextMenu>
+                      ))}
+                  </Folder>
+              </Tree>
+          </ScrollArea>
 
-      {/* Delete Confirmation Dialog */}
-      <AlertDialog 
-        open={showDeleteDialog} 
-        onOpenChange={(open) => {
-          setShowDeleteDialog(open);
-          if (!open && currentFileRef.current) {
-            // Restore focus when dialog closes
-            setCurrentFile(currentFileRef.current);
-          }
-        }}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete <span className="font-medium">{selectedFile}</span>. 
-              This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={handleDelete}
-              className="bg-red-500 hover:bg-red-600"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          {/* Rename Dialog */}
+          <Dialog
+              open={showRenameDialog}
+              onOpenChange={(open) => {
+                  setShowRenameDialog(open);
+                  if (!open && currentFileRef.current) {
+                      // Restore focus when dialog closes
+                      setCurrentFile(currentFileRef.current);
+                  }
+              }}
+          >
+              <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                      <DialogTitle>Rename File</DialogTitle>
+                      <DialogDescription>
+                          Enter a new name for {selectedFile}
+                      </DialogDescription>
+                  </DialogHeader>
+                  <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                          <Label htmlFor="name" className="text-right">
+                              Name
+                          </Label>
+                          <Input
+                              id="name"
+                              value={newName}
+                              onChange={(e) => setNewName(e.target.value)}
+                              className="col-span-3"
+                              autoFocus
+                              onKeyDown={(e) => {
+                                  if (e.key === "Enter") handleRename();
+                              }}
+                          />
+                      </div>
+                  </div>
+                  <DialogFooter>
+                      <Button
+                          type="button"
+                          variant="secondary"
+                          onClick={() => setShowRenameDialog(false)}
+                      >
+                          Cancel
+                      </Button>
+                      <Button type="button" onClick={handleRename}>
+                          Rename
+                      </Button>
+                  </DialogFooter>
+              </DialogContent>
+          </Dialog>
 
-    
-      
-    </div>
+          {/* Delete Confirmation Dialog */}
+          <AlertDialog
+              open={showDeleteDialog}
+              onOpenChange={(open) => {
+                  setShowDeleteDialog(open);
+                  if (!open && currentFileRef.current) {
+                      // Restore focus when dialog closes
+                      setCurrentFile(currentFileRef.current);
+                  }
+              }}
+          >
+              <AlertDialogContent>
+                  <AlertDialogHeader>
+                      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                          This will permanently delete{" "}
+                          <span className="font-medium">{selectedFile}</span>.
+                          This action cannot be undone.
+                      </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                          onClick={handleDelete}
+                          className="bg-red-500 hover:bg-red-600"
+                      >
+                          Delete
+                      </AlertDialogAction>
+                  </AlertDialogFooter>
+              </AlertDialogContent>
+          </AlertDialog>
+      </div>
   );
 }
 
