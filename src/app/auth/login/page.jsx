@@ -52,10 +52,10 @@ function LoginForm() {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-50">
-            <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-8 shadow-md">
+        <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-zinc-900 transition-colors">
+            <div className="w-full max-w-md space-y-8 rounded-lg bg-white dark:bg-zinc-800 p-8 shadow-md dark:shadow-zinc-900 transition-colors">
                 <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-zinc-900 dark:text-zinc-100">
                         Sign in to your account
                     </h2>
                 </div>
@@ -71,7 +71,7 @@ function LoginForm() {
                                 type="text"
                                 autoComplete="username"
                                 required
-                                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
+                                className="relative block w-full appearance-none rounded-none rounded-t-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-900 placeholder-zinc-500 dark:placeholder-zinc-400 focus:z-10 focus:border-zinc-500 focus:ring-zinc-500 focus:outline-none sm:text-sm transition-colors"
                                 placeholder="Username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -87,7 +87,7 @@ function LoginForm() {
                                 type="password"
                                 autoComplete="current-password"
                                 required
-                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none sm:text-sm"
+                                className="relative block w-full appearance-none rounded-none rounded-b-md border border-zinc-300 dark:border-zinc-700 px-3 py-2 text-zinc-900 dark:text-zinc-100 bg-white dark:bg-zinc-900 placeholder-zinc-500 dark:placeholder-zinc-400 focus:z-10 focus:border-zinc-500 focus:ring-zinc-500 focus:outline-none sm:text-sm transition-colors"
                                 placeholder="Password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -96,7 +96,7 @@ function LoginForm() {
                     </div>
 
                     {error && (
-                        <div className="text-center text-sm text-red-500">
+                        <div className="text-center text-sm text-red-500 dark:text-red-400">
                             {error}
                         </div>
                     )}
@@ -105,7 +105,7 @@ function LoginForm() {
                         <div className="text-sm">
                             <Link
                                 href="/forgot-password"
-                                className="font-medium text-indigo-600 hover:text-indigo-500"
+                                className="font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                             >
                                 Forgot your password?
                             </Link>
@@ -116,18 +116,18 @@ function LoginForm() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
+                            className="group relative flex w-full justify-center rounded-md border border-transparent bg-zinc-900 dark:bg-zinc-100 px-4 py-2 text-sm font-medium text-white dark:text-zinc-900 hover:bg-zinc-700 dark:hover:bg-zinc-300 focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50 transition-colors"
                         >
                             {isLoading ? "Signing in..." : "Sign in"}
                         </button>
                     </div>
                 </form>
                 <div className="mt-4 text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-300">
                         Don't have an account?{" "}
                         <Link
                             href="/auth/register"
-                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                            className="font-medium text-zinc-700 dark:text-zinc-100 hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors"
                         >
                             Sign up
                         </Link>
