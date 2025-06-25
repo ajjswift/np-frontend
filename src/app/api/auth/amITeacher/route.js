@@ -1,4 +1,3 @@
-// app/api/auth/validate-session/route.js
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import { cookies } from "next/headers";

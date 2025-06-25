@@ -1,5 +1,3 @@
-// AssignmentList.jsx
-
 import Link from "next/link";
 
 export function AssignmentList({ assignments, environments, classId }) {

@@ -1,5 +1,3 @@
-// components/CreateAssignmentDialog.jsx
-
 "use client";
 
 import { useState } from "react";
