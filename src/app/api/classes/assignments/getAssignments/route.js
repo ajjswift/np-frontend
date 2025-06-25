@@ -74,14 +74,12 @@ export async function GET(req) {
             const assignmentIds = assignments.map((a) => a.id);
             let startedMap = {};
             if (assignmentIds.length > 0) {
-                console.log(session.userId);
                 const { rows: started } = await db.execute`
                     SELECT assignment, environment
                     FROM assignment_environments
                     WHERE user_id = ${session.userId}
                     AND assignment = ANY(${assignmentIds})
                 `;
-                console.log(started);
                 for (const row of started) {
                     startedMap[row.assignment] = row.environment;
                 }

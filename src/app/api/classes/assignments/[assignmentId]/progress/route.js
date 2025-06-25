@@ -59,7 +59,6 @@ export async function GET(req, { params }) {
         const { rows } = await db.execute`
             SELECT user_id as student_id, environment FROM assignment_environments WHERE assignment = ${assignmentId}
         `;
-        console.log(rows);
 
         let studentEnvMap = {};
 
@@ -67,7 +66,6 @@ export async function GET(req, { params }) {
             studentEnvMap[row.student_id] = row.environment;
         }
 
-        console.log(studentEnvMap);
 
         // Return as array of { student, environmentId }
         return NextResponse.json(studentEnvMap);

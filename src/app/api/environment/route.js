@@ -9,7 +9,6 @@ export const GET = async (request) => {
         const validSession = await verifySession(sessionToken);
 
         if (!validSession) {
-            console.log(sessionToken);
             return NextResponse.json(
                 { message: "Invalid session" },
                 { status: 401 } // Unauthorized status
